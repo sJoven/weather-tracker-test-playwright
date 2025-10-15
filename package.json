@@ -1,7 +1,7 @@
 {
   "name": "weather-tracker-playwright-tests",
   "version": "1.0.0",
-  "description": "Playwright tests for the Weather Tracker App",
+  "description": "Playwright tests for the Weather Tracker App (https://sjoven.github.io/weather-tracker-app/)",
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test",
