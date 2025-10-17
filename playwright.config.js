@@ -1,3 +1,5 @@
+const { devices } = require('@playwright/test');
+
 const config = {
   testDir: './tests',
   fullyParallel: true,
