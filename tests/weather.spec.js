@@ -6,9 +6,9 @@ test.describe('Weather Tracker App', () => {
   });
 
   test('Page loads successfully with correct title', async ({ page }) => {
-    await expect(page).toHaveTitle(/Weather Tracker/);
+    await expect(page).toHaveTitle(/Weather Tracker App/);
 
-    await expect(page.locator('h1')).toHaveText('Weather Tracker');
+    await expect(page.locator('h1')).toHaveText('Weather Tracker App');
     await expect(page.locator('#cityInput')).toBeVisible();
     await expect(page.locator('#searchBtn')).toBeVisible();
     await expect(page.locator('.recent-cities h3')).toHaveText('Recent Searches');
