@@ -1,28 +1,48 @@
-name: Playwright Tests (Weather Tracker)
+name: Playwright Tests
 
 on:
-  workflow_dispatch: 
-  repository_dispatch: 
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
 
 jobs:
   test:
-    runs-on: ubuntu-latest
     timeout-minutes: 15
-
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout test repo
         uses: actions/checkout@v4
+        with:
+          path: tests-repo
+
+      - name: Checkout app repo
+        uses: actions/checkout@v4
+        with:
+          repository: sJoven/weather-tracker-app
+          path: app
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install dependencies (test repo)
+        run: |
+          cd tests-repo
+          npm ci
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+      - name: Serve app locally
+        run: |
+          cd app
+          npx serve . -p 3000 -s &
+          npx wait-on http://localhost:3000
+          cd ..
+
+      - name: Install Playwright browsers (test repo)
+        run: |
+          cd tests-repo
+          npx playwright install --with-deps
 
       - name: Wait until app is reachable
         run: |
@@ -32,14 +52,16 @@ jobs:
           done
 
       - name: Run Playwright tests
-        run: npx playwright test
+        run: |
+          cd tests-repo
+          npx playwright test
         env:
           CI: true
 
-      - name: Upload Playwright report
+      - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
-          path: playwright-report/
+          path: tests-repo/playwright-report/
           retention-days: 30
