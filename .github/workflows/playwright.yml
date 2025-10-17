@@ -24,6 +24,13 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+        - name: Wait until app is reachable
+        run: |
+          until curl -s --head --fail https://sjoven.github.io/weather-tracker-app/; do
+            echo "Waiting for app to be live..."
+            sleep 5
+          done
+
       - name: Run Playwright tests
         run: npx playwright test
         env:
