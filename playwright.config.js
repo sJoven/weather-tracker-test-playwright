@@ -8,7 +8,9 @@ const config = {
   workers: process.env.CI ? 1 : undefined,
   reporter: [['html']],
   use: {
-    baseURL: 'https://sjoven.github.io/weather-tracker-app/',
+    baseURL: process.env.CI
+      ? 'http://localhost:3000'
+      : 'https://sjoven.github.io/weather-tracker-app/',
     trace: 'on-first-retry',
     headless: !!process.env.CI,
   },

@@ -33,7 +33,7 @@ test.describe('Weather Tracker App', () => {
     await page.click('#searchBtn');
 
     await expect(page.locator('#errorMsg')).toBeVisible();
-    await expect(page.locator('#errorMsg')).toContainText(/City not found/); // Matches error from app
+    await expect(page.locator('#errorMsg')).toContainText(/City not found/);
 
     await expect(page.locator('#weatherDisplay')).toBeHidden();
   });
