@@ -16,6 +16,10 @@ const config = {
   },
   projects: [
     {
+      name: 'api',
+      use: {},
+    },
+    {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },

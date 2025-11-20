@@ -17,7 +17,7 @@ jobs:
       - name: Checkout app repo
         uses: actions/checkout@v4
         with:
-          repository: sJoven/weather-tracker-app
+          repository: sjoven/weather-tracker-app
           path: app
 
       - name: Setup Node.js
@@ -30,29 +30,29 @@ jobs:
           cd tests-repo
           npm ci
 
-      - name: Serve app locally
+      - name: Run API contract tests
+        run: |
+          cd tests-repo
+          npx playwright test api.spec.js  # Adjust to your API test file(s); use --grep @api if tagged
+        env:
+          CI: true
+
+      - name: Install Playwright browsers (for E2E tests)
+        run: |
+          cd tests-repo
+          npx playwright install --with-deps
+
+      - name: Serve app locally (for E2E tests)
         run: |
           cd app
           npx serve . -p 3000 -s &
           npx wait-on http://localhost:3000
           cd ..
 
-      - name: Install Playwright browsers (test repo)
+      - name: Run E2E UI tests
         run: |
           cd tests-repo
-          npx playwright install --with-deps
-
-      - name: Wait until app is reachable
-        run: |
-          until curl -s --head --fail https://sjoven.github.io/weather-tracker-app/; do
-            echo "Waiting for app to be live..."
-            sleep 5
-          done
-
-      - name: Run Playwright tests
-        run: |
-          cd tests-repo
-          npx playwright test
+          npx playwright test ui.spec.js  # Adjust to your E2E test file(s); use --grep @e2e if tagged
         env:
           CI: true
 

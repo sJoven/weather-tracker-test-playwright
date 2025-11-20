@@ -66,7 +66,7 @@ test.describe('Weather Tracker App', () => {
     await expect(page.locator('.recent-btn:nth-child(3)')).toHaveText('London');
   });
 
-  test('Clicking a saved recent city reloads the correct weather data', async ({ page }) => {
+    test('Clicking a saved recent city reloads the correct weather data', async ({ page }) => {
     await page.evaluate(() => localStorage.clear());
 
     await page.fill('#cityInput', 'Sydney');
@@ -74,7 +74,12 @@ test.describe('Weather Tracker App', () => {
     await expect(page.locator('#weatherDisplay')).toBeVisible();
     await expect(page.locator('#cityName')).toHaveText('Sydney');
 
-    await page.click('.recent-btn');
+    await page.fill('#cityInput', 'Paris');
+    await page.click('#searchBtn');
+    await expect(page.locator('#weatherDisplay')).toBeVisible();
+    await expect(page.locator('#cityName')).toHaveText('Paris');
+
+    await page.click('.recent-btn:has-text("Sydney")');
     await expect(page.locator('#weatherDisplay')).toBeVisible();
     await expect(page.locator('#cityName')).toHaveText('Sydney'); 
 
