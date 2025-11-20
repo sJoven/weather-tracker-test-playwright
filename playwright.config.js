@@ -17,10 +17,12 @@ const config = {
   projects: [
     {
       name: 'api',
+      testMatch: 'api.spec.js', 
       use: {},
     },
     {
       name: 'chromium',
+      testMatch: 'ui.spec.js', 
       use: { ...devices['Desktop Chrome'] },
     },
   ],
