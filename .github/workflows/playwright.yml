@@ -33,7 +33,7 @@ jobs:
       - name: Run API contract tests
         run: |
           cd tests-repo
-          npx playwright test api.spec.js  # Adjust to your API test file(s); use --grep @api if tagged
+          npx playwright test --project=api
         env:
           CI: true
 
@@ -52,7 +52,7 @@ jobs:
       - name: Run E2E UI tests
         run: |
           cd tests-repo
-          npx playwright test ui.spec.js  # Adjust to your E2E test file(s); use --grep @e2e if tagged
+          npx playwright test --project=chromium
         env:
           CI: true
 
